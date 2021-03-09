@@ -1,9 +1,9 @@
-from telegram import Update
+from telegram import Update, ReplyKeyboardMarkup, ReplyKeyboardRemove
 from telegram.ext import Updater, MessageHandler, Filters, CommandHandler
 
 
 
-TOKEN = '1501515491:AAGEsZn7RLqkgEzlM5wdjRBzh-CUUcOrvtk'
+TOKEN = '1501515491:AAHIIjAV0wKV5-XplEHngYaw1ovi-WPcQQY'
 
 def main():
     updater = Updater(token=TOKEN)  # На этой строчке мы создали объект, который ловит сообщения из телеграмм
@@ -14,7 +14,9 @@ def main():
     cod_info_handler = CommandHandler('cod_info', do_cod_info)
     start_handler = CommandHandler('start', do_start)
     help_handler = CommandHandler('help', do_help)  # Это второй шаг создания команды
+    keybord_handler = MessageHandler(Filters.text, do_something)
 
+    dispatcher.add_handler(keybord_handler)
     dispatcher.add_handler(start_handler)
     dispatcher.add_handler(help_handler) # Это третий, самый важный этап создания команды - регистрация.
     # Важно регистрировать команды в правильном порядке - если поставить эту регистрацию после той, что реагирует на все незарегестрированные команды - эта команда обработается как незарегестрированная
@@ -33,11 +35,27 @@ def do_echo(update, context):
     update.message.reply_text(text='AVE MARIA DEUS VOLT')
 
 def do_start(update, context):
+    keybord = [
+        ['1', '2', '3'],
+        ['4', '5', '6'],
+    ]
 
-
-    update.message.reply_text(text='Приветствую! Как насчет похода на Иерусалим?')
+    update.message.reply_text(
+        text='Приветствую! Как насчет похода на Иерусалим?',
+        reply_markup=ReplyKeyboardMarkup(keybord, one_time_keyboard=True, resize_keyboard=True)
+    )
     # Сама суть функции - принять два параметра и среагировать на что-то, дальше по коду.
     # Создание функции - первый шаг к созданию обрабатываемой команды
+
+
+def do_something(update: Update, context):
+    text = update.message.text
+    if text == '1':
+        update.message.reply_text('Вы нажали кнопку 1', reply_markup=ReplyKeyboardRemove())
+    elif text == '2':
+        update.message.reply_text('Вы нажали кнопку 2', reply_markup=ReplyKeyboardRemove())
+    elif text == '3':
+        update.message.reply_text('Вы нажали кнопку 3', reply_markup=ReplyKeyboardRemove())
 
 
 def do_help(update: Update, context):
