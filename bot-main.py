@@ -3,7 +3,7 @@ from telegram.ext import Updater, MessageHandler, Filters, CommandHandler
 
 
 
-TOKEN = '1501515491:AAHIIjAV0wKV5-XplEHngYaw1ovi-WPcQQY'
+TOKEN = '1540198709:AAGSQbvQ9VHEto7WOOFOnDVuDJZnUtxkrBo'
 
 def main():
     updater = Updater(token=TOKEN)  # На этой строчке мы создали объект, который ловит сообщения из телеграмм
@@ -15,13 +15,15 @@ def main():
     start_handler = CommandHandler('start', do_start)
     help_handler = CommandHandler('help', do_help)  # Это второй шаг создания команды
     keybord_handler = MessageHandler(Filters.text, do_something)
+    sticker_hanlder = MessageHandler(Filters.sticker, do_sticker)
 
-    dispatcher.add_handler(keybord_handler)
     dispatcher.add_handler(start_handler)
+    dispatcher.add_handler(keybord_handler)
     dispatcher.add_handler(help_handler) # Это третий, самый важный этап создания команды - регистрация.
     # Важно регистрировать команды в правильном порядке - если поставить эту регистрацию после той, что реагирует на все незарегестрированные команды - эта команда обработается как незарегестрированная
     # Диспетчер бота прогоняет команду по функциям и "скармливает" ее первой подошедшей для команды
     dispatcher.add_handler(cod_info_handler)
+    dispatcher.add_handler(sticker_hanlder)
     dispatcher.add_handler(handler)
 
     updater.start_polling()
@@ -36,7 +38,7 @@ def do_echo(update, context):
 
 def do_start(update, context):
     keybord = [
-        ['1', '2', '3'],
+        ['Конечно!', '2', '3'],
         ['4', '5', '6'],
     ]
 
@@ -50,13 +52,14 @@ def do_start(update, context):
 
 def do_something(update: Update, context):
     text = update.message.text
-    if text == '1':
-        update.message.reply_text('Вы нажали кнопку 1', reply_markup=ReplyKeyboardRemove())
+    if text == 'Конечно!':
+        update.message.reply_text('AVE MARIA DEUS VOLT', reply_markup=ReplyKeyboardRemove())
     elif text == '2':
         update.message.reply_text('Вы нажали кнопку 2', reply_markup=ReplyKeyboardRemove())
     elif text == '3':
         update.message.reply_text('Вы нажали кнопку 3', reply_markup=ReplyKeyboardRemove())
-
+    else:
+        update.message.reply_text('Ошибочка')
 
 def do_help(update: Update, context):
 
@@ -71,5 +74,8 @@ def do_cod_info(update: Update, context):
     username = update.message.from_user.username
     update.message.reply_text(text=f'Кодовое имя: {username}.\nПозывной: {name}. \nКомандные совместные боевые операции.')
 
+def do_sticker(update: Update, context):
+    sticker_id = update.message.sticker.file_id
+    update.message.reply_sticker(sticker_id)
 
 main()
