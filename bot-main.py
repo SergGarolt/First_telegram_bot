@@ -3,7 +3,7 @@ from telegram.ext import Updater, MessageHandler, Filters, CommandHandler
 
 
 
-TOKEN = '1540198709:AAGSQbvQ9VHEto7WOOFOnDVuDJZnUtxkrBo'
+TOKEN = '1540198709:AAGNHdeuXietXXYyQTfg8oImgSCyPfeus2g'
 
 def main():
     updater = Updater(token=TOKEN)  # На этой строчке мы создали объект, который ловит сообщения из телеграмм
