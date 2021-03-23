@@ -3,7 +3,7 @@ from telegram.ext import Updater, MessageHandler, Filters, CommandHandler
 
 
 
-TOKEN = '1540198709:AAGNHdeuXietXXYyQTfg8oImgSCyPfeus2g'
+TOKEN = '1540198709:AAFqaC0sYRZMsWajvvuHujLkt81CDy26Jq8'
 
 def main():
     updater = Updater(token=TOKEN)  # На этой строчке мы создали объект, который ловит сообщения из телеграмм
@@ -58,6 +58,8 @@ def do_something(update: Update, context):
         update.message.reply_text('Вы нажали кнопку 2', reply_markup=ReplyKeyboardRemove())
     elif text == '3':
         update.message.reply_text('Вы нажали кнопку 3', reply_markup=ReplyKeyboardRemove())
+    elif 'я не хочу брать Иерусалим' in text or 'Я не хочу брать Иерусалим' in text:
+        update.message.reply_sticker()
     else:
         update.message.reply_text('Ошибочка')
 
@@ -77,5 +79,6 @@ def do_cod_info(update: Update, context):
 def do_sticker(update: Update, context):
     sticker_id = update.message.sticker.file_id
     update.message.reply_sticker(sticker_id)
+    update.message.reply_text(sticker_id)
 
 main()
