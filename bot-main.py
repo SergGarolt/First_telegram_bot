@@ -1,9 +1,15 @@
 from telegram import Update, ReplyKeyboardMarkup, ReplyKeyboardRemove
 from telegram.ext import Updater, MessageHandler, Filters, CommandHandler
+from openpyxl import load_workbook
 
 
 
 TOKEN = '1540198709:AAFqaC0sYRZMsWajvvuHujLkt81CDy26Jq8'
+book = load_workbook('Test.xlsx')
+sheet_1 = book['Лист1']
+stickers_page = book['Стикеры']
+
+
 
 def main():
     updater = Updater(token=TOKEN)  # На этой строчке мы создали объект, который ловит сообщения из телеграмм
@@ -52,14 +58,22 @@ def do_start(update, context):
 
 def do_something(update: Update, context):
     text = update.message.text
+
+    print(stickers_page.max_row)
+    for row in range(2, stickers_page.max_row + 1):
+        catch_phrase = stickers_page.cell(row=row, column=4).value
+        print(catch_phrase)
+        print(text)
+        if catch_phrase in text:
+            sticker_id = stickers_page.cell(row=row, column=3).value
+            update.message.reply_sticker(sticker_id)
+
     if text == 'Конечно!':
         update.message.reply_text('AVE MARIA DEUS VOLT', reply_markup=ReplyKeyboardRemove())
     elif text == '2':
         update.message.reply_text('Вы нажали кнопку 2', reply_markup=ReplyKeyboardRemove())
     elif text == '3':
         update.message.reply_text('Вы нажали кнопку 3', reply_markup=ReplyKeyboardRemove())
-    elif 'я не хочу брать Иерусалим' in text or 'Я не хочу брать Иерусалим' in text:
-        update.message.reply_sticker()
     else:
         update.message.reply_text('Ошибочка')
 
