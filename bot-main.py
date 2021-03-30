@@ -4,7 +4,7 @@ from openpyxl import load_workbook
 
 
 
-TOKEN = '1540198709:AAFqaC0sYRZMsWajvvuHujLkt81CDy26Jq8'
+TOKEN = '1540198709:AAH_eIMsL8lvSmFwao01qGOogrRgH1Jv55Q'
 book = load_workbook('Test.xlsx')
 sheet_1 = book['Лист1']
 stickers_page = book['Стикеры']
@@ -67,6 +67,7 @@ def do_something(update: Update, context):
         if catch_phrase in text:
             sticker_id = stickers_page.cell(row=row, column=3).value
             update.message.reply_sticker(sticker_id)
+            return
 
     if text == 'Конечно!':
         update.message.reply_text('AVE MARIA DEUS VOLT', reply_markup=ReplyKeyboardRemove())
