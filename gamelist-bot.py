@@ -6,6 +6,7 @@ from openpyxl import load_workbook
 TOKEN = '1799218775:AAGOCz4CnagUDahkyAx9QdXbv_dKJIdrcG8'
 book = load_workbook('Game List.xlsx')
 sheet_1 = book['list1']
+gameinfo_page = book['list1']
 
 
 def main():
@@ -42,14 +43,25 @@ def do_start(update, context):
 def do_something(update: Update, context):
     text = update.message.text
 
-   # if text == 'Конечно!':
-    #    update.message.reply_text('AVE MARIA DEUS VOLT', reply_markup=ReplyKeyboardRemove())
-    #elif text == '2':
-    #    update.message.reply_text('Вы нажали кнопку 2', reply_markup=ReplyKeyboardRemove())
-    #elif text == '3':
-    #    update.message.reply_text('Вы нажали кнопку 3', reply_markup=ReplyKeyboardRemove())
-    #else:
-    #    update.message.reply_text('Ошибочка')
+    print(gameinfo_page.max_row)
+    for row in range(1, gameinfo_page.max_row + 1):
+        catch_phrase = gameinfo_page.cell(row=row, column=1).value
+        print(f'{row=}')
+        print(f'{catch_phrase=}')
+        print(f'{text=}')
+        if catch_phrase in text:
+            price = gameinfo_page.cell(row=row, column=5).value
+            update.message.reply_text(price)
+
+
+    if text == 'Apex Legends':
+        update.message.reply_text('Пока только цена, но ведь это тоже информация?', reply_markup=ReplyKeyboardRemove())
+    elif text == 'Star Wars Battlefront 2':
+        update.message.reply_text('Пока только цена, но ведь это тоже информация?', reply_markup=ReplyKeyboardRemove())
+    elif text == 'Minecraft Windows 10 edition':
+        update.message.reply_text('Пока только цена, но ведь это тоже информация?', reply_markup=ReplyKeyboardRemove())
+    else:
+        update.message.reply_text('Ошибочка')
 #доделать клавиатуру
 
 main()
