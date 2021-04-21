@@ -52,6 +52,7 @@ def do_something(update: Update, context):
         if catch_phrase in text:
             price = gameinfo_page.cell(row=row, column=5).value
             update.message.reply_text(price)
+            break
 
 
     if text == 'Apex Legends':
