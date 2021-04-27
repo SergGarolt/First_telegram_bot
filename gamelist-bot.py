@@ -51,16 +51,27 @@ def do_something(update: Update, context):
         print(f'{text=}')
         if catch_phrase in text:
             price = gameinfo_page.cell(row=row, column=5).value
-            update.message.reply_text(price)
+            store = gameinfo_page.cell(row=row, column=4).value
+            genre = gameinfo_page.cell(row=row, column=2).value
+
+            update.message.reply_text(f'Жанры: {genre}')
+            update.message.reply_text(f'Магазин: {store}')
+            update.message.reply_text(f'Цена: {price}')
+
+            #keybord2 = [
+            #    ['Минимальные системные требования', 'Вернуться к списку игр']
+            #]
+            #update.message.reply_text(
+            #    reply_markup = ReplyKeyboardMarkup(keybord2, one_time_keyboard=True, resize_keyboard=True)
+            #)
             break
 
-
     if text == 'Apex Legends':
-        update.message.reply_text('Пока только цена, но ведь это тоже информация?', reply_markup=ReplyKeyboardRemove())
+        update.message.reply_text('Информация обновится со временем', reply_markup=ReplyKeyboardRemove())
     elif text == 'Star Wars Battlefront 2':
-        update.message.reply_text('Пока только цена, но ведь это тоже информация?', reply_markup=ReplyKeyboardRemove())
+        update.message.reply_text('Информация обновится со временем', reply_markup=ReplyKeyboardRemove())
     elif text == 'Minecraft Windows 10 edition':
-        update.message.reply_text('Пока только цена, но ведь это тоже информация?', reply_markup=ReplyKeyboardRemove())
+        update.message.reply_text('Информация обновится со временем', reply_markup=ReplyKeyboardRemove())
     else:
         update.message.reply_text('Ошибочка')
 #доделать клавиатуру
