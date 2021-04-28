@@ -17,9 +17,11 @@ def main():
     handler = MessageHandler(Filters.all, do_echo)
     start_handler = CommandHandler('start', do_start)
     keybord_handler = MessageHandler(Filters.text, do_something)
+    keybord2_handler = MessageHandler(Filters.text, do_second_answer)
 
     dispatcher.add_handler(start_handler)
     dispatcher.add_handler(keybord_handler)
+    dispatcher.add_handler(keybord2_handler)
     dispatcher.add_handler(handler)
 
     updater.start_polling()
@@ -58,22 +60,32 @@ def do_something(update: Update, context):
             update.message.reply_text(f'Магазин: {store}')
             update.message.reply_text(f'Цена: {price}')
 
-            #keybord2 = [
-            #    ['Минимальные системные требования', 'Вернуться к списку игр']
-            #]
-            #update.message.reply_text(
-            #    reply_markup = ReplyKeyboardMarkup(keybord2, one_time_keyboard=True, resize_keyboard=True)
-            #)
+            keybord2 = [
+                ['Минимальные системные требования', 'Вернуться к списку игр']
+            ]
+            update.message.reply_text(
+                text='Выберите действие: ',
+                reply_markup = ReplyKeyboardMarkup(keybord2, one_time_keyboard=True, resize_keyboard=True)
+            )
             break
 
-    if text == 'Apex Legends':
-        update.message.reply_text('Информация обновится со временем', reply_markup=ReplyKeyboardRemove())
-    elif text == 'Star Wars Battlefront 2':
-        update.message.reply_text('Информация обновится со временем', reply_markup=ReplyKeyboardRemove())
-    elif text == 'Minecraft Windows 10 edition':
-        update.message.reply_text('Информация обновится со временем', reply_markup=ReplyKeyboardRemove())
-    else:
-        update.message.reply_text('Ошибочка')
-#доделать клавиатуру
+    #if text == 'Apex Legends':
+    #    update.message.reply_text('Информация обновится со временем', reply_markup=ReplyKeyboardRemove())
+    #elif text == 'Star Wars Battlefront 2':
+    #    update.message.reply_text('Информация обновится со временем', reply_markup=ReplyKeyboardRemove())
+    #elif text == 'Minecraft Windows 10 edition':
+    #    update.message.reply_text('Информация обновится со временем', reply_markup=ReplyKeyboardRemove())
+    #else:
+    #    update.message.reply_text('Ошибочка')
+
+def do_second_answer(update: Update, context):
+    text = update.message.text
+
+    if text == 'Вернуться к списку игр':
+        return do_start(update, context)
+
+    #if text == 'Минимальные системные требования':
+
+    #доделать вторую клавиатуру
 
 main()
