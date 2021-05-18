@@ -3,7 +3,7 @@ from telegram.ext import Updater, MessageHandler, Filters, CommandHandler
 from openpyxl import load_workbook
 
 
-TOKEN = '1799218775:AAGOCz4CnagUDahkyAx9QdXbv_dKJIdrcG8'
+TOKEN = '1799218775:AAEBnVCAoRvEfjbBlbuQTotZa88dKABmDZ8'
 book = load_workbook('Game List.xlsx')
 sheet_1 = book['list1']
 gameinfo_page = book['list1']
@@ -16,12 +16,12 @@ def main():
 
     handler = MessageHandler(Filters.all, do_echo)
     start_handler = CommandHandler('start', do_start)
+    keybord2_handler = MessageHandler(Filters.text('Вернуться к списку игр'), do_start)
     keybord_handler = MessageHandler(Filters.text, do_something)
-    keybord2_handler = MessageHandler(Filters.text, do_second_answer)
 
     dispatcher.add_handler(start_handler)
-    dispatcher.add_handler(keybord_handler)
     dispatcher.add_handler(keybord2_handler)
+    dispatcher.add_handler(keybord_handler)
     dispatcher.add_handler(handler)
 
     updater.start_polling()
@@ -68,23 +68,6 @@ def do_something(update: Update, context):
                 reply_markup = ReplyKeyboardMarkup(keybord2, one_time_keyboard=True, resize_keyboard=True)
             )
             break
-
-    #if text == 'Apex Legends':
-    #    update.message.reply_text('Информация обновится со временем', reply_markup=ReplyKeyboardRemove())
-    #elif text == 'Star Wars Battlefront 2':
-    #    update.message.reply_text('Информация обновится со временем', reply_markup=ReplyKeyboardRemove())
-    #elif text == 'Minecraft Windows 10 edition':
-    #    update.message.reply_text('Информация обновится со временем', reply_markup=ReplyKeyboardRemove())
-    #else:
-    #    update.message.reply_text('Ошибочка')
-
-def do_second_answer(update: Update, context):
-    text = update.message.text
-
-    if text == 'Вернуться к списку игр':
-        return do_start(update, context)
-
-    #if text == 'Минимальные системные требования':
 
     #доделать вторую клавиатуру
 
